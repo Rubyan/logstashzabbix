@@ -29,7 +29,11 @@ This only needs to be setup on the logstash node
 ## Important note
 This is a very little and basic plugin I wrote to monitor my resources. I just wanted to share this if you also need a handy and simple plugin to check some logstash info.
 
-
+## Installation with ansible
+Use ansible to install jq, copy the files and restart the agent.
+```
+sudo ansible-playbook playbook.yml
+```
 ## License
 This plugin is published under **GNU General Public License v3.0**. Feel free to use and modify this as you need.
 

@@ -1,0 +1,25 @@
+---
+- name: executing tasks on localhost
+  hosts: 127.0.0.1
+  connection: local
+
+  tasks:
+  - name: Add jq
+    package:
+      name: jq
+      state: present
+
+  - name: copy script 
+    copy:                                                         
+      src: "agent/logstashzabbix.sh"              
+      dest: /data/zabbix/                                  
+
+  - name: copy userparams                                   
+    copy:                                                         
+      src: "agent/logstash-zabbix.conf"              
+      dest: /data/zabbix/zabbix_agentd.d/
+
+  - name: Restart zabbix agent service
+    service:
+      name: zabbix-agent
+      state: restarted
