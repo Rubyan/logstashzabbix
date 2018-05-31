@@ -13,6 +13,7 @@
     copy:                                                         
       src: "agent/logstashzabbix.sh"              
       dest: /data/zabbix/                                  
+      mode: a+x
 
   - name: copy userparams                                   
     copy:                                                         
