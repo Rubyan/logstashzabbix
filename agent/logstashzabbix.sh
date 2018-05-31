@@ -2,19 +2,21 @@
 
 case $1 in
     status )
-        initctl status logstash | grep -q running && echo 1 || echo 0 ;;
+        systemctl status logstash | grep -q running && echo 1 || echo 0 ;;
+    version )
+        curl -s http://localhost:9600 | jq -r '.version' ;;
     heap_bytes )
-        curl -s http://localhost:9600//_node/stats/jvm | python -mjson.tool | grep \"heap_used_in_bytes | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/jvm | jq -r '.jvm.mem.heap_used_in_bytes' ;;
     heap_percent )
-        curl -s http://localhost:9600//_node/stats/jvm | python -mjson.tool | grep \"heap_used_percent | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/jvm | jq -r '.jvm.mem.heap_used_percent' ;;
     heap_max )
-        curl -s http://localhost:9600//_node/stats/jvm | python -mjson.tool | grep \"heap_max_in_bytes | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/jvm | jq -r '.jvm.mem.heap_max_in_bytes' ;;
     events_in )
-        curl -s http://localhost:9600//_node/stats/pipeline | python -mjson.tool | head -10 | grep \"in | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/pipelines | jq -r '.pipelines.main.events.in' ;;
     events_filtered )
-        curl -s http://localhost:9600//_node/stats/pipeline | python -mjson.tool | head -10 | grep \"filtered | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/pipelines | jq -r '.pipelines.main.events.filtered' ;;
     events_out )
-        curl -s http://localhost:9600//_node/stats/pipeline | python -mjson.tool | head -11 | grep \"out | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/pipelines | jq -r '.pipelines.main.events.out' ;;
     failures )
-        curl -s http://localhost:9600//_node/stats/pipeline | python -mjson.tool | grep \"failures | awk '{ print $2 }' | sed 's/,//' ;;
+        curl -s localhost:9600/_node/stats/pipelines | jq -r '.pipelines.main.reloads.failures' ;;
 esac

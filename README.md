@@ -1,5 +1,5 @@
 # logstashzabbix
-VEEERY basic (but useful) logstash monitoring plugin for zabbix
+A basic logstash monitoring plugin for zabbix that uses UserParameters
 
 ## Features:
 
@@ -10,7 +10,7 @@ VEEERY basic (but useful) logstash monitoring plugin for zabbix
 
 ## Requirements
 
- - Python 2/3 on a logstash node with zabbix agent installed
+ - jq on a logstash node with zabbix agent installed. Tested with logstash 6.2.3
 
 ## Installation
 
